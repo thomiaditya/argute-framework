@@ -10,7 +10,6 @@ use ReflectionParameter;
 use LogicException;
 use Anamorph\Covenant\Container\Container as ContainerInterface;
 use Anamorph\Important\Container\NotFoundException;
-use Symfony\Component\Mime\Exception\LogicException as ExceptionLogicException;
 
 class Container implements ContainerInterface
 {
