@@ -9,5 +9,5 @@ interface Application
      *
      * @return Anamorph\Covenant\Application\Application
      */
-    public function run($baseDir);
+    public function run($basePath);
 } 

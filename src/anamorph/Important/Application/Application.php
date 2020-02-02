@@ -21,16 +21,16 @@ class Application extends Container implements ApplicationCovenant
      *
      * @var string
      */
-    protected $baseDir;
+    protected $basePath;
 
     /**
      * Set the home path.
      *
-     * @param string $baseDir
+     * @param string $basePath
      */
-    public function run($baseDir)
+    public function run($basePath)
     {
-        $this->baseDir = $baseDir;
+        $this->basePath = $basePath;
         $this->initErrorHandlingWhoops();
 
         return $this;

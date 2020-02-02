@@ -11,4 +11,6 @@ $app = include_once __DIR__ . '/../bootstrap/app.php';
 /** Testing */
 
 $request = \Anamorph\Http\Request\Request::recap();
-dd($request);
+dump($request);
+
+?>
