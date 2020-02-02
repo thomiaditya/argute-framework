@@ -7,3 +7,8 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 $app = include_once __DIR__ . '/../bootstrap/app.php';
+
+/** Testing */
+
+$request = \Anamorph\Http\Request\Request::recap();
+dd($request);
