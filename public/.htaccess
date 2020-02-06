@@ -1,12 +1,5 @@
-Options -Multiviews
 RewriteEngine On
-RewriteBase /mvc/
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^([^.]*)$ public/index.php/$1 [L]
-
-RewriteCond %{THE_REQUEST} /index\.php[?\s] [NC]
-RewriteRule ^ public [R=302,L,NE]
-
-
+RewriteRule ^([^.]*)$ index.php [L]

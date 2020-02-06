@@ -1,14 +1,13 @@
 <?php
-/**
- * Name : Thomi Aditya
- * V1.0
- */
 
 require __DIR__ . '/../vendor/autoload.php';
 
 $app = include_once __DIR__ . '/../bootstrap/app.php';
 
-/** Testing */
+$kernel = $app->develop(\Anamorph\Http\Kernel\Kernel::class);
 
-$request = \Anamorph\Http\Request\Request::recap();
-dump($request);
+$response = $kernel->handle(
+    \Anamorph\Http\Request\Request::recap()
+);
+
+$response->send();
