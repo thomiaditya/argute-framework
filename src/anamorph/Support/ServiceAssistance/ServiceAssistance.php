@@ -16,7 +16,7 @@ abstract class ServicesAssistance
     /**
      * Add application instance to service.
      *
-     * @param Anamorph\Covenant\Application\Application $app
+     * @param Application $app
      */
     public function __construct(Application $app)
     {
