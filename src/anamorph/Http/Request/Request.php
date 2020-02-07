@@ -50,7 +50,7 @@ class Request extends SymfonyRequest implements RequestCovenant
      * Give the inserted variable in get method, or post method.
      *
      * @param string $var
-     * 
+     *
      * @return string|array
      */
     public function inserted($var, $default = null)
@@ -59,7 +59,7 @@ class Request extends SymfonyRequest implements RequestCovenant
     }
 
     /**
-     * Get method that setted.
+     * Get the request method.
      *
      * @return void
      */
@@ -69,9 +69,9 @@ class Request extends SymfonyRequest implements RequestCovenant
     }
 
     /**
-     * Get the language.
+     * Get the request language.
      *
-     * @return void
+     * @return array
      */
     public function language()
     {

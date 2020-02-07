@@ -2,11 +2,11 @@
 
 namespace Anamorph\Http\Kernel;
 
-use Anamorph\Http\Request\Request;
-use Anamorph\Http\Response\Response;
+use Anamorph\Covenant\Http\Kernel as KernelInterface;
+use Anamorph\Covenant\Http\Request;
 use Anamorph\Important\Application\Application;
 
-class Kernel
+class Kernel implements KernelInterface
 {
     /**
      * Apps that used.
@@ -29,6 +29,11 @@ class Kernel
      */
     protected $response;
 
+    /**
+     * Kernel constructor.
+     *
+     * @param Application $app
+     */
     public function __construct(Application $app)
     {
         $this->app = $app;
