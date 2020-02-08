@@ -1,23 +1,25 @@
 <?php
 
 use Anamorph\Covenant\Container\Container as ContainerAlias;
-use Anamorph\Covenant\Event\Listeners\TestListener;
+use Anamorph\Event\Dispatchs\TestEvent;
 use Anamorph\Event\EventDispatcher;
+use PHPUnit\Framework\TestCase;
 
 require_once 'vendor/autoload.php';
 
-class EventDispatcherTest extends \PHPUnit\Framework\TestCase
+class EventDispatcherTest extends TestCase
 {
     /** @test */
     function listenTheListener()
     {
-        $container = new Anamorph\Important\Container\Container;
-        
+        $container = new Anamorph\Important\Application\Application;
+
         $container->instance(ContainerAlias::class, $container);
 
         $dispatcher = $container->develop(EventDispatcher::class);
 
-        $dispatcher->listen('test.index', [new TestListener, 'index']);
-        dd($dispatcher->dispatch('test.index'));
+        $dispatcher->listen('test.event', 'TestListener::index');
+
+        $dispatcher->dispatch(TestEvent::NAME, new TestEvent);
     }
 }

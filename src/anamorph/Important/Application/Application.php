@@ -36,6 +36,7 @@ class Application extends Container implements ApplicationCovenant
      * Set the home path.
      *
      * @param string $basePath
+     * @return Application
      */
     public function run($basePath)
     {

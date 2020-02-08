@@ -16,11 +16,12 @@ interface Dispatcher
     public function listen($event, $listener, $priority = false);
 
     /**
-     * Dispatch existing event.
+     * Dispatch an event.
      *
      * @param string $event The event that will be dispatched.
+     * @param object $object The object.
      *
      * @return mixed
      */
-    public function dispatch($event);
+    public function dispatch($event, object $object);
 }

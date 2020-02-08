@@ -11,7 +11,7 @@ interface Request
      *
      * @return \Anamorph\Http\Request\Request
      */
-    public function recap();
+    public static function recap();
 
     /**
      * Create a clone from state.

@@ -4,6 +4,7 @@ namespace Anamorph\Http\Kernel;
 
 use Anamorph\Covenant\Http\Kernel as KernelInterface;
 use Anamorph\Covenant\Http\Request;
+use Anamorph\Http\Response\Response;
 use Anamorph\Important\Application\Application;
 
 class Kernel implements KernelInterface
