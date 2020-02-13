@@ -10,6 +10,6 @@ class TestEvent extends Event
 
     public function show()
     {
-        return 'test.event';
+        return 'Show method from test event.';
     }
 }

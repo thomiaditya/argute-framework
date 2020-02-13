@@ -11,7 +11,7 @@ class EventDispatcher implements Dispatcher
     /**
      * The container or the application that used.
      *
-     * @var Container
+     * @var \Anamorph\Covenant\Container\Container
      */
     protected $container;
 
@@ -88,15 +88,29 @@ class EventDispatcher implements Dispatcher
     protected function makeListener(array $listener)
     {
         return function (array $params) use ($listener) {
-            call_user_func_array($listener, $params);
+            return call_user_func_array($listener, $params);
         };
     }
 
     /**
      * @inheritDoc
      */
-    public function dispatch($event, object $object)
+    public function dispatch($event, $object)
     {
+        if(is_string($object)) {
+            /**
+             * Its injecting the event object.
+             * 
+             * @var \Anamorph\Covenant\Event\Event
+             */
+            $object = $this->container->develop($object);
+        }
+
+        if($object->isPropagationStopped()) {
+            /** @todo Fill the logic if propagation is stopped what should to do. */
+        }
+        
+        /** @todo Replace this call function for better. Its cannot use end method! */
         return call_user_func(end($this->listened[$event]), [$object]);
     }
 }

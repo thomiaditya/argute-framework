@@ -19,9 +19,9 @@ interface Dispatcher
      * Dispatch an event.
      *
      * @param string $event The event that will be dispatched.
-     * @param object $object The object.
+     * @param \Anamorph\Covenant\Event\Event|string $object The object.
      *
      * @return mixed
      */
-    public function dispatch($event, object $object);
+    public function dispatch($event, $object);
 }

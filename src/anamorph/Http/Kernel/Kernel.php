@@ -33,17 +33,20 @@ class Kernel implements KernelInterface
     /**
      * Kernel constructor.
      *
-     * @param Application $app
+     * @param \Anamorph\Important\Application\Application $app
      */
     public function __construct(Application $app)
     {
         $this->app = $app;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function handle(Request $request)
     {
         $this->request = $request;
-
+        
         $response = new Response(
             'Content',
             Response::HTTP_OK,
