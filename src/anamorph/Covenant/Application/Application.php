@@ -10,4 +10,14 @@ interface Application
      * @return Anamorph\Covenant\Application\Application
      */
     public function run($basePath);
+
+    /**
+     * Create singleton defining.
+     *
+     * @param string $abstract
+     * @param string|object|null $concrete
+     * 
+     * @return void
+     */
+    public function singletonIf($abstract, $concrete);
 } 
