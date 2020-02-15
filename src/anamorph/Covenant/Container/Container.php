@@ -110,4 +110,22 @@ interface Container extends ContainerInterface, ArrayAccess
      * @throws Exception
      */
     public function getPath($path);
+
+    /**
+     * Get namespace from namespaces property.
+     *
+     * @param string $abstract
+     * @return string
+     */
+    public function getNamespace($abstract);
+
+    /**
+     * Set a namespace instance.
+     *
+     * @param string $abstract
+     * @param string $namespace
+     * 
+     * @return void
+     */
+    public function namespace($abstract, $namespace);
 }

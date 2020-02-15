@@ -2,7 +2,7 @@
 
 namespace Anamorph\Event;
 
-use Anamorph\Covenant\Container\Container;
+use Anamorph\Covenant\Application\Application;
 use Anamorph\Covenant\Event\Dispatcher;
 use Anamorph\Important\Container\LogicException;
 
@@ -11,9 +11,9 @@ class EventDispatcher implements Dispatcher
     /**
      * The container or the application that used.
      *
-     * @var \Anamorph\Covenant\Container\Container
+     * @var \Anamorph\Covenant\Application\Application
      */
-    protected $container;
+    protected $application;
 
     /**
      * All listened listeners goes here.
@@ -25,11 +25,11 @@ class EventDispatcher implements Dispatcher
     /**
      * EventDispatcher constructor.
      *
-     * @param Container $container
+     * @param \Anamorph\Covenant\Application\Application $container
      */
-    public function __construct(Container $container)
+    public function __construct(Application $application)
     {
-        $this->container = $container;
+        $this->application = $application;
     }
 
     /**
@@ -73,7 +73,7 @@ class EventDispatcher implements Dispatcher
      */
     protected function addNamespace($parsed)
     {
-        if(class_exists($parsedNamespace = 'Anamorph\Event\Listeners\\' . $parsed)) {
+        if(class_exists($parsedNamespace = $this->application->getNamespace('event.listeners') . $parsed)) {
             return $parsedNamespace;
         }
     }
@@ -103,7 +103,7 @@ class EventDispatcher implements Dispatcher
              * 
              * @var \Anamorph\Covenant\Event\Event
              */
-            $object = $this->container->develop($object);
+            $object = $this->application->develop($object);
         }
 
         if($object->isPropagationStopped()) {

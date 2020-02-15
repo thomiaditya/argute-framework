@@ -2,7 +2,9 @@
 
 namespace Anamorph\Covenant\Application;
 
-interface Application
+use Anamorph\Covenant\Container\Container;
+
+interface Application extends Container
 {
     /**
      * Run the application.
@@ -20,4 +22,11 @@ interface Application
      * @return void
      */
     public function singletonIf($abstract, $concrete);
+
+    /**
+     * Get the base namespace.
+     *
+     * @return string
+     */
+    public function getBaseNamespace();
 } 

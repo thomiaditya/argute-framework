@@ -64,6 +64,13 @@ class Container implements ContainerInterface
     protected $paths = [];
 
     /**
+     * Holds all namespaces instance.
+     *
+     * @var array[]
+     */
+    protected $namespaces = [];
+
+    /**
      * All named abstract.
      *
      * @var array[]
@@ -100,6 +107,36 @@ class Container implements ContainerInterface
         }
 
         return true; 
+    }
+
+    /**
+     * Set a namespace instance.
+     *
+     * @param string $abstract
+     * @param string $namespace
+     * 
+     * @return void
+     */
+    public function namespace($abstract, $namespace)
+    {
+        if(! isset($this->namespaces[$abstract])) {
+            $this->namespaces[$abstract] = $namespace;
+        }
+    }
+
+    /**
+     * Get namespace from namespaces property.
+     *
+     * @param string $abstract
+     * @return string
+     */
+    public function getNamespace($abstract)
+    {
+        try {
+            return $this->namespaces[$abstract];
+        } catch(Exception $e) {
+            throw $e;
+        }
     }
 
     /**
