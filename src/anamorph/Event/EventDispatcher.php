@@ -20,7 +20,14 @@ class EventDispatcher implements Dispatcher
      *
      * @var array[]
      */
-    protected $listened;
+    protected $listened = [];
+
+    /**
+     * If already dispatched, the listener name will save here.
+     *
+     * @var array[]
+     */
+    protected $dispatched = [];
 
     /**
      * EventDispatcher constructor.
@@ -73,7 +80,9 @@ class EventDispatcher implements Dispatcher
      */
     protected function addNamespace($parsed)
     {
-        if(class_exists($parsedNamespace = $this->application->getNamespace('event.listeners') . $parsed)) {
+        $parsedNamespace = $this->application->getNamespace('event\listeners') . $parsed;
+
+        if(class_exists($parsedNamespace)) {
             return $parsedNamespace;
         }
     }
@@ -87,9 +96,17 @@ class EventDispatcher implements Dispatcher
      */
     protected function makeListener(array $listener)
     {
-        return function (array $params) use ($listener) {
-            return call_user_func_array($listener, $params);
+        return function ($params) use ($listener) {
+            return call_user_func_array($listener, [$params]);
         };
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function has($id)
+    {
+        return isset($this->listened[$id]);
     }
 
     /**
@@ -97,6 +114,10 @@ class EventDispatcher implements Dispatcher
      */
     public function dispatch($event, $object)
     {
+        if(! $this->has($event)) {
+            return;
+        }
+
         if(is_string($object)) {
             /**
              * Its injecting the event object.
@@ -106,11 +127,12 @@ class EventDispatcher implements Dispatcher
             $object = $this->application->develop($object);
         }
 
-        if($object->isPropagationStopped()) {
+        if ($object->isPropagationStopped()) {
             /** @todo Fill the logic if propagation is stopped what should to do. */
         }
-        
-        /** @todo Replace this call function for better. Its cannot use end method! */
-        return call_user_func(end($this->listened[$event]), [$object]);
+
+        foreach($this->listened[$event] as $event) {
+            call_user_func($event, $object);
+        }
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Anamorph\Event\Dispatchs;
+namespace Anamorph\Event\Events;
 
 use Anamorph\Covenant\Event\Event;
 
 class TestEvent extends Event
 {
-    const NAME = 'test.event';
+    const NAME = 'test.index';
 
     public function show()
     {

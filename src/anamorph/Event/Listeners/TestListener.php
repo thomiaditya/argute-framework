@@ -15,6 +15,6 @@ class TestListener
      */
     public function index(Event $event)
     {
-        return $event->show();
+        echo $event->show();
     }
 }

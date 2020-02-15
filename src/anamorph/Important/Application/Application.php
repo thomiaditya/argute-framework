@@ -69,7 +69,7 @@ class Application extends Container implements ApplicationCovenant
      */
     protected function setPrimaryNamespace()
     {
-        $this->namespace('event.listeners', $this->namespaceEventListener());
+        $this->namespace('event\listeners', $this->namespaceEventListener());
     }
 
     /**

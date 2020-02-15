@@ -24,4 +24,13 @@ interface Dispatcher
      * @return mixed
      */
     public function dispatch($event, $object);
+
+    /**
+     * Check whether the dispatcher has the event name.
+     *
+     * @param string $id
+     * 
+     * @return boolean
+     */
+    public function has($id);
 }

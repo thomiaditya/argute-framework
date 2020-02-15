@@ -1,7 +1,7 @@
 <?php
 
 use Anamorph\Covenant\Application\Application as ApplicationApplication;
-use Anamorph\Event\Dispatchs\TestEvent;
+use Anamorph\Event\Events\TestEvent;
 use Anamorph\Event\EventDispatcher;
 use Anamorph\Event\Listeners\TestListener;
 use PHPUnit\Framework\TestCase;
@@ -17,13 +17,11 @@ class EventDispatcherTest extends TestCase
 
         $container->instance(ApplicationApplication::class, $container);
 
-        $dispatcher = $container->develop(EventDispatcher::class);
+        $dispatcher = $container[EventDispatcher::class];
         
         $dispatcher->listen('test.event', 'TestListener::index');
 
-        $index = $dispatcher->dispatch(TestEvent::NAME, new TestEvent);
-        
-        $this->assertEquals('Show method from test event.', $index);
+        $dispatcher->dispatch(TestEvent::NAME, new TestEvent);
     }
 
     /** @test Test the dispatcher with string class name. */
@@ -37,8 +35,6 @@ class EventDispatcherTest extends TestCase
 
         $dispatcher->listen('test.event', [new TestListener, 'index']);
 
-        $index = $dispatcher->dispatch(TestEvent::NAME, TestEvent::class);
-
-        $this->assertEquals('Show method from test event.', $index);
+        $dispatcher->dispatch(TestEvent::NAME, TestEvent::class);
     }
 }
