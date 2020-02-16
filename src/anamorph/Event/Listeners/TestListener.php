@@ -15,6 +15,11 @@ class TestListener
      */
     public function index(Event $event)
     {
-        echo $event->show();
+        $event->show();
+    }
+
+    public function indexTwo(Event $event)
+    {
+        echo "\nIndex 2 from listener";
     }
 }

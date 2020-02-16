@@ -9,11 +9,11 @@ interface Dispatcher
      *
      * @param string $event Event name that can call in the future.
      * @param \Closure|array|null|string $listener Listener that will be linked to event.
-     * @param bool $priority Set if it listener is a priority.
+     * @param int $priority Higher number given will be priority.
      *
      * @return mixed
      */
-    public function listen($event, $listener, $priority = false);
+    public function listen($event, $listener, $priority = 0);
 
     /**
      * Dispatch an event.
@@ -33,4 +33,15 @@ interface Dispatcher
      * @return boolean
      */
     public function has($id);
+
+    /**
+     * Add a subscriber class to event dispatcher.
+     * 
+     * Subscriber is plenty of listener in one place.
+     *
+     * @param object $subscriber
+     * 
+     * @return void
+     */
+    public function subscribe($subscriber);
 }

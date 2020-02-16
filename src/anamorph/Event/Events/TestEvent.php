@@ -6,10 +6,22 @@ use Anamorph\Covenant\Event\Event;
 
 class TestEvent extends Event
 {
-    const NAME = 'test.index';
+    const NAME = 'test.event';
+
+    /**
+     * Container.
+     *
+     * @var \Anamorph\Covenant\Container\Container
+     */
+    protected $container;
+
+    public function __construct(\Anamorph\Covenant\Container\Container $container)
+    {
+        $this->container = $container;
+    }
 
     public function show()
     {
-        return 'Show method from test event.';
+        echo 'Show method from test event.';
     }
 }

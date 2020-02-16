@@ -1,6 +1,7 @@
 <?php
 
 use Anamorph\Covenant\Application\Application as ApplicationApplication;
+use Anamorph\Covenant\Container\Container;
 use Anamorph\Event\Events\TestEvent;
 use Anamorph\Event\EventDispatcher;
 use Anamorph\Event\Listeners\TestListener;
@@ -19,9 +20,10 @@ class EventDispatcherTest extends TestCase
 
         $dispatcher = $container[EventDispatcher::class];
         
-        $dispatcher->listen('test.event', 'TestListener::index');
+        $dispatcher->listen('test.event', 'TestListener::index', 51);
+        $dispatcher->listen('test.event', 'TestListener::indexTwo', 52);
 
-        $dispatcher->dispatch(TestEvent::NAME, new TestEvent);
+        $dispatcher->dispatch(TestEvent::NAME, new TestEvent($container));
     }
 
     /** @test Test the dispatcher with string class name. */
@@ -30,6 +32,7 @@ class EventDispatcherTest extends TestCase
         $container = (new Anamorph\Important\Application\Application)->run(dirname(__DIR__));
 
         $container->instance(ApplicationApplication::class, $container);
+        $container->instance(Container::class, $container);
 
         $dispatcher = $container->develop(EventDispatcher::class);
 

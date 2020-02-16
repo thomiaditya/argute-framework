@@ -5,6 +5,7 @@ namespace Anamorph\Event;
 use Anamorph\Covenant\Application\Application;
 use Anamorph\Covenant\Event\Dispatcher;
 use Anamorph\Important\Container\LogicException;
+use Exception;
 
 class EventDispatcher implements Dispatcher
 {
@@ -30,6 +31,13 @@ class EventDispatcher implements Dispatcher
     protected $dispatched = [];
 
     /**
+     * Subscribed listener.
+     *
+     * @var array[]
+     */
+    protected $subscribed = [];
+
+    /**
      * EventDispatcher constructor.
      *
      * @param \Anamorph\Covenant\Application\Application $container
@@ -42,13 +50,40 @@ class EventDispatcher implements Dispatcher
     /**
      * @inheritDoc
      */
-    public function listen($event, $listener, $priority = false)
+    public function listen($event, $listener, $priority = 0)
     {
         if(is_string($listener)) {
             $listener = $this->parseStringListener($listener);
         }
+        
+        $this->listened[$event][] = [
+            'listener' => $this->makeListener(array(new $listener[0], $listener[1])),
+            'priority' => $priority
+        ];
 
-        $this->listened[$event][] = $this->makeListener($listener);
+        $this->sortListened($event);
+    }
+
+    /**
+     * Sort the listened property as the priority given.
+     *
+     * @param string $event
+     * 
+     * @return void
+     */
+    protected function sortListened($event)
+    {
+        usort($this->listened[$event], function ($a, $b) {
+            return $b['priority'] <=> $a['priority'];
+        });
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function subscribe($subscriber)
+    {
+        /** @todo Add a subscribe method! */
     }
 
     /**
@@ -96,8 +131,8 @@ class EventDispatcher implements Dispatcher
      */
     protected function makeListener(array $listener)
     {
-        return function ($params) use ($listener) {
-            return call_user_func_array($listener, [$params]);
+        return function (...$params) use ($listener) {
+            call_user_func_array($listener, $params);
         };
     }
 
@@ -115,7 +150,7 @@ class EventDispatcher implements Dispatcher
     public function dispatch($event, $object)
     {
         if(! $this->has($event)) {
-            return;
+            throw new Exception("Listener doesnt added yet!");
         }
 
         if(is_string($object)) {
@@ -128,11 +163,11 @@ class EventDispatcher implements Dispatcher
         }
 
         if ($object->isPropagationStopped()) {
-            /** @todo Fill the logic if propagation is stopped what should to do. */
+            return;
         }
 
         foreach($this->listened[$event] as $event) {
-            call_user_func($event, $object);
+            $event['listener']($object);
         }
     }
 }
