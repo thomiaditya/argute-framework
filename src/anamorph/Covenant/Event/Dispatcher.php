@@ -39,7 +39,7 @@ interface Dispatcher
      * 
      * Subscriber is plenty of listener in one place.
      *
-     * @param object $subscriber
+     * @param \Anamorph\Covenant\Event\Subscriber $subscriber
      * 
      * @return void
      */

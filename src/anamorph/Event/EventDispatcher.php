@@ -56,6 +56,9 @@ class EventDispatcher implements Dispatcher
             $listener = $this->parseStringListener($listener);
         }
         
+        // Add to listened property and the event name is an offset. It will added to array
+        // first and then it will be sorted automatically, so it sorted by how much priority
+        // to listen first. When dispatched, it will call the priority first.
         $this->listened[$event][] = [
             'listener' => $this->makeListener(array(new $listener[0], $listener[1])),
             'priority' => $priority
@@ -83,7 +86,23 @@ class EventDispatcher implements Dispatcher
      */
     public function subscribe($subscriber)
     {
-        /** @todo Add a subscribe method! */
+        $listeners = $subscriber->subscribed();
+
+        foreach($listeners as $event => $args) {
+            if(is_string($args)) {
+                $this->listen($event, [$subscriber, $args]);
+                continue;
+            }
+
+            foreach($args as $arg) {
+                if(is_string($arg)) {
+                    $this->listen($event, [$subscriber, $arg]);
+                    continue;
+                }
+
+                $this->listen($event, [$subscriber, $arg[0]], $arg[1]);
+            }
+        }
     }
 
     /**
@@ -101,25 +120,11 @@ class EventDispatcher implements Dispatcher
             throw $e;
         }
 
-        $parsed[0] = $this->addNamespace($parsed[0]);
+        if (! class_exists($parsed[0])) {
+            throw new LogicException("You are entering on wrong namespace!");
+        }
 
         return $parsed;
-    }
-
-    /**
-     * Add namespace if there is no namespace.
-     *
-     * @param $parsed
-     *
-     * @return string
-     */
-    protected function addNamespace($parsed)
-    {
-        $parsedNamespace = $this->application->getNamespace('event\listeners') . $parsed;
-
-        if(class_exists($parsedNamespace)) {
-            return $parsedNamespace;
-        }
     }
 
     /**
