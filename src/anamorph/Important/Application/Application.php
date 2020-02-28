@@ -33,33 +33,24 @@ class Application extends Container implements ApplicationCovenant
     ];
 
     /**
-     * Set the home path.
-     *
-     * @param string $basePath
-     * @return self
-     */
-    public function run($basePath)
-    {
-        $this->basePath = $basePath;
-        $this->initErrorHandlingWhoops();
-
-        $this->setPrimaryDefining();
-        $this->setPrimaryNamespace();
-        $this->setPrimaryName();
-
-        return $this;
-    }
-
-    /**
      * Use the static :: operator for running application.
      *
      * @param string $basePath
      * 
      * @return self
      */
-    public static function staticRun($basePath)
+    public static function run($basePath)
     {
-        return (new self)->run($basePath);
+        $app = new self;
+
+        $app->basePath = $basePath;
+        $app->initErrorHandlingWhoops();
+
+        $app->setPrimaryDefining();
+        $app->setPrimaryNamespace();
+        $app->setPrimaryName();
+
+        return $app;
     }
 
     /**

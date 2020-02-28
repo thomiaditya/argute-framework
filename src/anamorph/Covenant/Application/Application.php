@@ -11,7 +11,7 @@ interface Application extends Container
      *
      * @return Anamorph\Covenant\Application\Application
      */
-    public function run($basePath);
+    public static function run($basePath);
 
     /**
      * Create singleton defining.

@@ -16,3 +16,5 @@ $response = $kernel->handle(
 );
 
 $response->send();
+
+

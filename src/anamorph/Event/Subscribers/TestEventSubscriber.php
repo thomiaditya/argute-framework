@@ -5,7 +5,6 @@ namespace Anamorph\Event\Subscribers;
 use Anamorph\Covenant\Event\Event;
 use Anamorph\Covenant\Event\Subscriber;
 use Anamorph\Event\Events\TestEvent;
-use Anamorph\Event\Listeners\TestListener;
 
 class TestEventSubscriber implements Subscriber
 {
@@ -22,7 +21,7 @@ class TestEventSubscriber implements Subscriber
     /**
      * Test.
      *
-     * @param \Anamorph\Event\Dispatchs\TestEvent $event
+     * @param \Anamorph\Event\Events\TestEvent $event
      * 
      * @return void
      */
@@ -35,7 +34,7 @@ class TestEventSubscriber implements Subscriber
     /**
      * Test.
      *
-     * @param \Anamorph\Event\Dispatchs\TestEvent $event
+     * @param \Anamorph\Event\Events\TestEvent $event
      * 
      * @return void
      */
